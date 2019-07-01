@@ -24,21 +24,24 @@ def draw_axis(img, R, t, K):
     img = cv2.line(img, tuple(axisPoints[3].ravel()), tuple(axisPoints[1].ravel()), (0,255,0), 3)
     img = cv2.line(img, tuple(axisPoints[3].ravel()), tuple(axisPoints[2].ravel()), (0,0,255), 3)
     return img
-
+#非极大值抑制
 def nms(dets, thresh):
     x1 = dets[:, 0]
     y1 = dets[:, 1]
     x2 = dets[:, 2]
     y2 = dets[:, 3]
-    scores = dets[:, 4]
+    scores = dets[:, 4] #bbox打分
 
     areas = (x2 - x1 + 1) * (y2 - y1 + 1)
+    # 打分从大到小排列，取index
     order = scores.argsort()[::-1]
-
+    # keep为最后保留的目标
     keep = []
     while order.size > 0:
+        # order[0]是当前分数最大的窗口，肯定保留
         i = order[0]
         keep.append(i)
+        # 计算窗口i与其他所有窗口的交叠部分的面积
         xx1 = np.maximum(x1[i], x1[order[1:]])
         yy1 = np.maximum(y1[i], y1[order[1:]])
         xx2 = np.minimum(x2[i], x2[order[1:]])
@@ -47,9 +50,11 @@ def nms(dets, thresh):
         w = np.maximum(0.0, xx2 - xx1 + 1)
         h = np.maximum(0.0, yy2 - yy1 + 1)
         inter = w * h
+        # 交/并得到iou值
         ovr = inter / (areas[i] + areas[order[1:]] - inter)
-
+        # inds为所有与窗口i的iou值<=threshold值的窗口的index，其他窗口也就是iou>threshold的值因为重复了所以被删除，仅仅保留iou<=threshold
         inds = np.where(ovr <= thresh)[0]
+        # order里面只保留与窗口i交叠面积小于threshold的那些窗口，由于ovr长度比order长度少1(不包含i)，所以inds+1对应到保留的窗口
         order = order[inds + 1]
 
     return keep
@@ -64,14 +69,14 @@ dataset = 'hinterstoisser'
 
 # mode = 'render_train'
 mode = 'test'
-
+#取参数
 dp = get_dataset_params(dataset)
 detector = linemodLevelup_pybind.Detector(16, [4, 8], 16)  # min features; pyramid strides; num clusters
 
 obj_ids = []  # for each obj
 obj_ids_curr = range(1, dp['obj_count'] + 1)
 if obj_ids:
-    obj_ids_curr = set(obj_ids_curr).intersection(obj_ids)
+    obj_ids_curr = set(obj_ids_curr).intersection(obj_ids) #交集
 
 scene_ids = []  # for each obj
 im_ids = []  # obj's img
