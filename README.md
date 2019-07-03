@@ -20,9 +20,11 @@ wget -r -np -nH --cut-dirs=1 -R index.html http://ptak.felk.cvut.cz/6DB/public/
 install opencv3 with contrib rgbd module  
 source:https://github.com/opencv/opencv/releases,  contrib module:https://github.com/opencv/opencv_contrib/releases
 steps:Refer to https://docs.opencv.org/master/d7/d9f/tutorial_linux_install.html, build from source code,pay attention to debug with contrib module.
+
 install pybind11  
 source:https://github.com/pybind/pybind11/releases
 reference:https://pybind11.readthedocs.io/en/master/
+
 install open3d(for icp)
 source:https://github.com/intel-isl/Open3D/releases,  you should download code under the Open3D-3rdparty file folder from https://github.com/intel-isl/Open3D-3rdparty
 reference:http://www.open3d.org/docs/release/compilation.html 
