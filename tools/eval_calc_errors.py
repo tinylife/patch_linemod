@@ -16,7 +16,7 @@ from params.dataset_params import get_dataset_params
 # Results for which the errors will be calculated
 #-------------------------------------------------------------------------------
 
-#dataset = 'hinterstoisser'
+# dataset = 'hinterstoisser'
 # dataset = 'tless'
 # dataset = 'tudlight'
 # dataset = 'rutgers'
