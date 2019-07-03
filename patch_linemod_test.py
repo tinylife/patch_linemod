@@ -118,7 +118,7 @@ misc.ensure_dir(result_base_path)
 if mode == 'render_train':
     start_time = time.time()
 
-    im_size = dp['cam']['im_size']
+    im_size = dp['cam']['im_size'] #图片大小 
     shape = (im_size[1], im_size[0])
 
     # Frame buffer object, bind here to avoid memory leak, maybe?
