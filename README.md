@@ -14,7 +14,8 @@ get dataset under top level folder folder using following cmd
 ```
 wget -r -np -nH --cut-dirs=1 -R index.html http://ptak.felk.cvut.cz/6DB/public/
 ```
-**environment:** ubuntu 16.04,anaconda 3.6(you can build with a lower version when high version can't work)
+###environment
+ubuntu 16.04,anaconda 3.6(you can build with a lower version when high version can't work)
 ### library
 
 install opencv3 with contrib rgbd module  
